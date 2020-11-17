@@ -29,6 +29,7 @@ class Showcase extends StatefulWidget {
   final VoidCallback onTargetClick;
   final bool disposeOnTap;
   final bool disableAnimation;
+  final bool closeOnTap;
 
   const Showcase({
     @required this.key,
@@ -49,6 +50,7 @@ class Showcase extends StatefulWidget {
     this.disableAnimation = false,
     this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
     this.onToolTipClick,
+    this.closeOnTap = true
   })  : height = null,
         width = null,
         container = null,
@@ -97,6 +99,7 @@ class Showcase extends StatefulWidget {
       this.disposeOnTap,
       this.animationDuration = const Duration(milliseconds: 2000),
       this.disableAnimation = false,
+      this.closeOnTap = true,
       this.contentPadding = const EdgeInsets.symmetric(vertical: 8)})
       : this.showArrow = false,
         this.onToolTipClick = null,
@@ -241,7 +244,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
         child: Stack(
           children: [
             GestureDetector(
-              onTap: _nextIfAny,
+              onTap: widget.closeOnTap ? _nextIfAny : null,
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
