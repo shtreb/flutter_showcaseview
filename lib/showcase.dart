@@ -29,7 +29,8 @@ class Showcase extends StatefulWidget {
   final VoidCallback onTargetClick;
   final bool disposeOnTap;
   final bool disableAnimation;
-  final bool closeOnTap;
+  final bool closeOnTapNoTarget;
+  final Border border;
 
   const Showcase({
     @required this.key,
@@ -50,7 +51,8 @@ class Showcase extends StatefulWidget {
     this.disableAnimation = false,
     this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
     this.onToolTipClick,
-    this.closeOnTap = true
+    this.closeOnTapNoTarget = true,
+    this.border
   })  : height = null,
         width = null,
         container = null,
@@ -99,7 +101,8 @@ class Showcase extends StatefulWidget {
       this.disposeOnTap,
       this.animationDuration = const Duration(milliseconds: 2000),
       this.disableAnimation = false,
-      this.closeOnTap = true,
+      this.closeOnTapNoTarget = true,
+      this.border,
       this.contentPadding = const EdgeInsets.symmetric(vertical: 8)})
       : this.showArrow = false,
         this.onToolTipClick = null,
@@ -225,6 +228,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
   }
 
   void _getOnTooltipTap() {
+    if (widget.closeOnTapNoTarget) return;
     if (widget.disposeOnTap == true) {
       ShowCaseWidget.of(context).dismiss();
     }
@@ -244,7 +248,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
         child: Stack(
           children: [
             GestureDetector(
-              onTap: widget.closeOnTap ? _nextIfAny : null,
+              onTap: widget.closeOnTapNoTarget ? _nextIfAny : null,
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -280,6 +284,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
               contentWidth: widget.width,
               onTooltipTap: _getOnTooltipTap,
               contentPadding: widget.contentPadding,
+              border: widget.border
             ),
           ],
         ),

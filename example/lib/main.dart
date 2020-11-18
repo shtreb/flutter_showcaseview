@@ -154,7 +154,9 @@ class _MailPageState extends State<MailPage> {
                   child: Showcase(
                     key: _three,
                     description: 'Tap to check mail',
+                    disableAnimation: false,
                     disposeOnTap: true,
+                    border: Border.all(color: Colors.red, width: 1),
                     onTargetClick: () {
                       Navigator.push(
                         context,

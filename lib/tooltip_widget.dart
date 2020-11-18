@@ -48,6 +48,7 @@ class ToolTipWidget extends StatefulWidget {
   static bool isArrowUp;
   final VoidCallback onTooltipTap;
   final EdgeInsets contentPadding;
+  final Border border;
 
   ToolTipWidget(
       {this.position,
@@ -65,7 +66,8 @@ class ToolTipWidget extends StatefulWidget {
       this.contentHeight,
       this.contentWidth,
       this.onTooltipTap,
-      this.contentPadding});
+      this.contentPadding,
+      this.border});
 
   @override
   _ToolTipWidgetState createState() => _ToolTipWidgetState();
@@ -181,7 +183,6 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
     if (widget.container == null) {
       return Stack(
         children: <Widget>[
-          widget.showArrow ? _getArrow(contentOffsetMultiplier) : Container(),
           Positioned(
             top: contentY,
             left: _getLeft(),
@@ -205,11 +206,16 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                         child: Container(
                           width: _getTooltipWidth(),
                           padding: widget.contentPadding,
-                          color: widget.tooltipColor,
+                          decoration: BoxDecoration(
+                              border: widget.border ?? Border.all(width: 0),
+                              borderRadius: BorderRadius.circular(8),
+                              color: widget.tooltipColor,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Container(
+                                padding: EdgeInsets.all(8),
                                 child: Column(
                                   crossAxisAlignment: widget.title != null
                                       ? CrossAxisAlignment.start
@@ -226,7 +232,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                                                         color:
                                                             widget.textColor)),
                                           )
-                                        : Container(),
+                                        : SizedBox.shrink(),
                                     Text(
                                       widget.description,
                                       style: widget.descTextStyle ??
@@ -248,7 +254,8 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                 ),
               ),
             ),
-          )
+          ),
+          widget.showArrow ? _getArrow(contentOffsetMultiplier) : Container(),
         ],
       );
     } else {
@@ -300,12 +307,60 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
 
   Widget _getArrow(contentOffsetMultiplier) {
     final contentFractionalOffset = contentOffsetMultiplier.clamp(-1.0, 0.0);
+    /*var offset = widget.border?.top?.width ??
+        widget.border?.bottom?.width ??
+        widget.border?.right?.width ??
+        widget.border?.left?.width ?? 0;
+    var color = widget.border?.top?.color ??
+        widget.border?.bottom?.color ??
+        widget.border?.left?.color ??
+        widget.border?.right?.color ?? null;*/
     return Positioned(
       top: ToolTipWidget.isArrowUp
           ? widget.position.getBottom()
           : widget.position.getTop() - 1,
       left: widget.position.getCenter() - 24,
-      child: FractionalTranslation(
+      child: /*Stack(
+        children: [
+          FractionalTranslation(
+            translation: Offset(0.0, contentFractionalOffset),
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: Offset(0.0, contentFractionalOffset / 5),
+                end: Offset(0.0, 0.150),
+              ).animate(widget.animationOffset),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  ClipRRect(
+                    
+                    child: Icon(
+                      ToolTipWidget.isArrowUp
+                          ? Icons.arrow_drop_up
+                          : Icons.arrow_drop_down,
+                      color: color ?? widget.tooltipColor,
+                      size: 50 + (offset ?? 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: offset%2 == 1 ? offset + 1: offset
+                    ),
+                    child: Icon(
+                      ToolTipWidget.isArrowUp
+                          ? Icons.arrow_drop_up
+                          : Icons.arrow_drop_down,
+                      color: widget.tooltipColor,
+                      size: 50,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      )*/
+      FractionalTranslation(
         translation: Offset(0.0, contentFractionalOffset),
         child: SlideTransition(
           position: Tween<Offset>(
