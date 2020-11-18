@@ -215,7 +215,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.all(8),
+                                padding: EdgeInsets.symmetric(horizontal: 16),
                                 child: Column(
                                   crossAxisAlignment: widget.title != null
                                       ? CrossAxisAlignment.start
