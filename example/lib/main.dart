@@ -153,14 +153,14 @@ class _MailPageState extends State<MailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Showcase(
                     key: _three,
-                    description: 'Tap to check mail',
-                    disableAnimation: false,
+                    description: 'У вас есть личный кабинет что бы просматривать всю интересующую вас информацию',
+                    descTextStyle: TextStyle(color: Colors.black87, fontSize: 16),
+                    shapeBorder: CircleBorder(),
                     disposeOnTap: true,
-                    //border: Border.all(color: Colors.red, width: 1),
+                    closeOnTapNoTarget: false,
                     hasButton: true,
-                    isOutlineButton: true,
-                    textButton: 'Hello',
-                    colorButton: Colors.orange,
+                    colorButton: Colors.yellow,
+                    textButton: 'Понятно!',
                     onToolTipClick: () {
 
                     },
