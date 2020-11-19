@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:showcaseview/showcase-button.dart';
 import 'dart:async';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:showcaseview/custom_paint.dart';
@@ -30,7 +31,8 @@ class Showcase extends StatefulWidget {
   final bool disposeOnTap;
   final bool disableAnimation;
   final bool closeOnTapNoTarget;
-  final Border border;
+  //final Border border;
+  final ShowCaseButton button;
 
   const Showcase({
     @required this.key,
@@ -52,7 +54,8 @@ class Showcase extends StatefulWidget {
     this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
     this.onToolTipClick,
     this.closeOnTapNoTarget = true,
-    this.border
+    //this.border,
+    this.button
   })  : height = null,
         width = null,
         container = null,
@@ -102,7 +105,8 @@ class Showcase extends StatefulWidget {
       this.animationDuration = const Duration(milliseconds: 2000),
       this.disableAnimation = false,
       this.closeOnTapNoTarget = true,
-      this.border,
+      //this.border,
+      this.button,
       this.contentPadding = const EdgeInsets.symmetric(vertical: 8)})
       : this.showArrow = false,
         this.onToolTipClick = null,
@@ -240,55 +244,55 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
     Size size,
     Rect rectBound,
     Size screenSize,
-  ) =>
-      Visibility(
-        visible: _showShowCase,
-        maintainAnimation: true,
-        maintainState: true,
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: widget.closeOnTapNoTarget ? _nextIfAny : null,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: CustomPaint(
-                  painter: ShapePainter(
-                      opacity: widget.overlayOpacity,
-                      rect: position.getRect(),
-                      shapeBorder: widget.shapeBorder,
-                      color: widget.overlayColor),
-                ),
+  ) => Visibility(
+      visible: _showShowCase,
+      maintainAnimation: true,
+      maintainState: true,
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: widget.closeOnTapNoTarget ? _nextIfAny : null,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: CustomPaint(
+                painter: ShapePainter(
+                    opacity: widget.overlayOpacity,
+                    rect: position.getRect(),
+                    shapeBorder: widget.shapeBorder,
+                    color: widget.overlayColor),
               ),
             ),
-            _TargetWidget(
-              offset: offset,
-              size: size,
-              onTap: _getOnTargetTap,
-              shapeBorder: widget.shapeBorder,
-            ),
-            ToolTipWidget(
-              position: position,
-              offset: offset,
-              screenSize: screenSize,
-              title: widget.title,
-              description: widget.description,
-              animationOffset: _slideAnimation,
-              titleTextStyle: widget.titleTextStyle,
-              descTextStyle: widget.descTextStyle,
-              container: widget.container,
-              tooltipColor: widget.showcaseBackgroundColor,
-              textColor: widget.textColor,
-              showArrow: widget.showArrow,
-              contentHeight: widget.height,
-              contentWidth: widget.width,
-              onTooltipTap: _getOnTooltipTap,
-              contentPadding: widget.contentPadding,
-              border: widget.border
-            ),
-          ],
-        ),
-      );
+          ),
+          _TargetWidget(
+            offset: offset,
+            size: size,
+            onTap: _getOnTargetTap,
+            shapeBorder: widget.shapeBorder,
+          ),
+          ToolTipWidget(
+            position: position,
+            offset: offset,
+            screenSize: screenSize,
+            title: widget.title,
+            description: widget.description,
+            animationOffset: _slideAnimation,
+            titleTextStyle: widget.titleTextStyle,
+            descTextStyle: widget.descTextStyle,
+            container: widget.container,
+            tooltipColor: widget.showcaseBackgroundColor,
+            textColor: widget.textColor,
+            showArrow: widget.showArrow,
+            contentHeight: widget.height,
+            contentWidth: widget.width,
+            onTooltipTap: _getOnTooltipTap,
+            contentPadding: widget.contentPadding,
+            //border: widget.border,
+            button: widget.button,
+          ),
+        ],
+      ),
+    );
 }
 
 class _TargetWidget extends StatelessWidget {

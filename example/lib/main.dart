@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:example/detailscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcase-button.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 void main() => runApp(MyApp());
@@ -50,7 +51,7 @@ class _MailPageState extends State<MailPage> {
     //Start showcase view after current widget frames are drawn.
     WidgetsBinding.instance.addPostFrameCallback((_) =>
         ShowCaseWidget.of(context)
-            .startShowCase([_one, _two, _three, _four, _five]));
+            .startShowCase([/*_one, _two, */_three, /*_four, _five*/]));
   }
 
   @override
@@ -156,7 +157,15 @@ class _MailPageState extends State<MailPage> {
                     description: 'Tap to check mail',
                     disableAnimation: false,
                     disposeOnTap: true,
-                    border: Border.all(color: Colors.red, width: 1),
+                    //border: Border.all(color: Colors.red, width: 1),
+                    button: ShowCaseButton(
+                      title: 'Hello',
+                      onPressed: () {
+
+                      },
+                      isOutline: true,
+                      color: Colors.orange,
+                    ),
                     onTargetClick: () {
                       Navigator.push(
                         context,
@@ -328,7 +337,7 @@ class _MailPageState extends State<MailPage> {
           onPressed: () {
             setState(() {
               ShowCaseWidget.of(context)
-                  .startShowCase([_one, _two, _three, _four, _five]);
+                  .startShowCase([/*_one, _two, */_three, /*_four, _five*/]);
             });
           },
           child: Icon(

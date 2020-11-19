@@ -48,7 +48,8 @@ class ToolTipWidget extends StatefulWidget {
   static bool isArrowUp;
   final VoidCallback onTooltipTap;
   final EdgeInsets contentPadding;
-  final Border border;
+  //final Border border;
+  final Widget button;
 
   ToolTipWidget(
       {this.position,
@@ -67,7 +68,9 @@ class ToolTipWidget extends StatefulWidget {
       this.contentWidth,
       this.onTooltipTap,
       this.contentPadding,
-      this.border});
+      //this.border,
+      this.button
+  });
 
   @override
   _ToolTipWidgetState createState() => _ToolTipWidgetState();
@@ -183,6 +186,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
     if (widget.container == null) {
       return Stack(
         children: <Widget>[
+          widget.showArrow ? _getArrow(contentOffsetMultiplier) : Container(),
           Positioned(
             top: contentY,
             left: _getLeft(),
@@ -202,12 +206,13 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: GestureDetector(
-                        onTap: widget.onTooltipTap,
+                        onTap: widget.button != null ?
+                          null : widget.onTooltipTap,
                         child: Container(
                           width: _getTooltipWidth(),
                           padding: widget.contentPadding,
                           decoration: BoxDecoration(
-                              border: widget.border ?? Border.all(width: 0),
+                              //border: widget.border ?? Border.all(width: 0),
                               borderRadius: BorderRadius.circular(8),
                               color: widget.tooltipColor,
                           ),
@@ -242,6 +247,9 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                                               .merge(TextStyle(
                                                   color: widget.textColor)),
                                     ),
+                                    widget.button == null ?
+                                        SizedBox.shrink():
+                                        widget.button
                                   ],
                                 ),
                               )
@@ -255,7 +263,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
               ),
             ),
           ),
-          widget.showArrow ? _getArrow(contentOffsetMultiplier) : Container(),
+          //widget.showArrow ? _getArrow(contentOffsetMultiplier) : Container(),
         ],
       );
     } else {
@@ -276,7 +284,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                 child: Material(
                   color: Colors.transparent,
                   child: GestureDetector(
-                    onTap: widget.onTooltipTap,
+                    onTap: widget.button != null ? null : widget.onTooltipTap,
                     child: Container(
                       padding: EdgeInsets.only(
                         top: paddingTop,
@@ -365,7 +373,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
         child: SlideTransition(
           position: Tween<Offset>(
             begin: Offset(0.0, contentFractionalOffset / 5),
-            end: Offset(0.0, 0.150),
+            end: Offset(0.0, 0.160),
           ).animate(widget.animationOffset),
           child: Icon(
             ToolTipWidget.isArrowUp
