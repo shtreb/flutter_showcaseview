@@ -32,7 +32,10 @@ class Showcase extends StatefulWidget {
   final bool disableAnimation;
   final bool closeOnTapNoTarget;
   //final Border border;
-  final ShowCaseButton button;
+  final bool hasButton;
+  final bool isOutlineButton;
+  final String textButton;
+  final Color colorButton;
 
   const Showcase({
     @required this.key,
@@ -55,7 +58,10 @@ class Showcase extends StatefulWidget {
     this.onToolTipClick,
     this.closeOnTapNoTarget = true,
     //this.border,
-    this.button
+    this.hasButton = false,
+    this.isOutlineButton = true,
+    this.textButton = '',
+    this.colorButton = Colors.blue
   })  : height = null,
         width = null,
         container = null,
@@ -106,7 +112,10 @@ class Showcase extends StatefulWidget {
       this.disableAnimation = false,
       this.closeOnTapNoTarget = true,
       //this.border,
-      this.button,
+      this.hasButton = false,
+      this.isOutlineButton = true,
+      this.textButton = '',
+      this.colorButton = Colors.blue,
       this.contentPadding = const EdgeInsets.symmetric(vertical: 8)})
       : this.showArrow = false,
         this.onToolTipClick = null,
@@ -232,7 +241,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
   }
 
   void _getOnTooltipTap() {
-    if (widget.closeOnTapNoTarget) return;
+    if (widget.closeOnTapNoTarget && !widget.hasButton) return;
     if (widget.disposeOnTap == true) {
       ShowCaseWidget.of(context).dismiss();
     }
@@ -244,7 +253,17 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
     Size size,
     Rect rectBound,
     Size screenSize,
-  ) => Visibility(
+  ) {
+
+    Widget button = widget.hasButton ?
+        ShowCaseButton(
+            title: widget.textButton,
+            color: widget.colorButton,
+            isOutline: widget.isOutlineButton,
+            onPressed: _getOnTargetTap,
+        ) : null;
+
+    return Visibility(
       visible: _showShowCase,
       maintainAnimation: true,
       maintainState: true,
@@ -288,11 +307,12 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
             onTooltipTap: _getOnTooltipTap,
             contentPadding: widget.contentPadding,
             //border: widget.border,
-            button: widget.button,
+            button: button,
           ),
         ],
       ),
     );
+  }
 }
 
 class _TargetWidget extends StatelessWidget {
