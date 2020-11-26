@@ -378,7 +378,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
         child: SlideTransition(
           position: Tween<Offset>(
             begin: Offset(0.0, contentFractionalOffset / 5),
-            end: Offset(0.0, widget.button == null ? 0.150 : 0.220),
+            end: Offset(0.0, widget.button == null ? 0.160 : 0.270),
           ).animate(widget.animationOffset),
           child: Icon(
             ToolTipWidget.isArrowUp
