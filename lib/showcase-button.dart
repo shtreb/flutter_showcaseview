@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShowCaseButton extends StatelessWidget {
@@ -35,15 +36,9 @@ class ShowCaseButton extends StatelessWidget {
           )
       );
     } else {
-      widget = FlatButton(
+      widget = CupertinoButton(
           child: title,
-          color: Colors.transparent,
-          onPressed: onPressed,
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(6),
-            ),
-          )
+          onPressed: onPressed
       );
     }
 
