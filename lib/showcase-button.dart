@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ShowCaseButton extends StatelessWidget {
 
-  final String title;
+  final Widget title;
   final bool isOutline;
   final Color color;
   final VoidCallback onPressed;
@@ -23,7 +23,7 @@ class ShowCaseButton extends StatelessWidget {
 
     if (isOutline) {
       widget = OutlineButton(
-          child: Text(title),
+          child: title,
           color: color,
           borderSide: BorderSide(color: color, width: 1),
           highlightedBorderColor: color.withOpacity(.75),
@@ -35,9 +35,9 @@ class ShowCaseButton extends StatelessWidget {
           )
       );
     } else {
-      widget = MaterialButton(
-          child: Text(title),
-          color: color,
+      widget = FlatButton(
+          child: title,
+          color: Colors.transparent,
           onPressed: onPressed,
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(

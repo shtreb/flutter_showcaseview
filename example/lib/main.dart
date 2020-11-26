@@ -154,13 +154,15 @@ class _MailPageState extends State<MailPage> {
                   child: Showcase(
                     key: _three,
                     description: 'У вас есть личный кабинет что бы просматривать всю интересующую вас информацию',
-                    descTextStyle: TextStyle(color: Colors.black87, fontSize: 16),
+                    descTextStyle: TextStyle(color: Colors.black87, fontSize: 22),
                     shapeBorder: CircleBorder(),
                     disposeOnTap: true,
+                    isOutlineButton: false,
                     closeOnTapNoTarget: false,
                     hasButton: true,
                     colorButton: Colors.yellow,
-                    textButton: 'Понятно!',
+                    showcaseBackgroundColor: Color(0xFFFABC29),
+                    textButton: Text('OK', style: TextStyle(fontSize: 22),),
                     onToolTipClick: () {
 
                     },

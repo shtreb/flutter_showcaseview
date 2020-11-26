@@ -34,8 +34,9 @@ class Showcase extends StatefulWidget {
   //final Border border;
   final bool hasButton;
   final bool isOutlineButton;
-  final String textButton;
+  final Widget textButton;
   final Color colorButton;
+  final BorderRadius showcaseShape;
 
   const Showcase({
     @required this.key,
@@ -58,9 +59,10 @@ class Showcase extends StatefulWidget {
     this.onToolTipClick,
     this.closeOnTapNoTarget = true,
     //this.border,
+    this.showcaseShape,
     this.hasButton = false,
     this.isOutlineButton = true,
-    this.textButton = '',
+    this.textButton,
     this.colorButton = Colors.blue
   })  : height = null,
         width = null,
@@ -114,8 +116,9 @@ class Showcase extends StatefulWidget {
       //this.border,
       this.hasButton = false,
       this.isOutlineButton = true,
-      this.textButton = '',
+      this.textButton,
       this.colorButton = Colors.blue,
+      this.showcaseShape,
       this.contentPadding = const EdgeInsets.symmetric(vertical: 8)})
       : this.showArrow = false,
         this.onToolTipClick = null,
@@ -307,6 +310,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
             onTooltipTap: _getOnTooltipTap,
             contentPadding: widget.contentPadding,
             //border: widget.border,
+            showcaseShape: widget.showcaseShape,
             button: button,
           ),
         ],

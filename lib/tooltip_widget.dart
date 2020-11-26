@@ -49,6 +49,7 @@ class ToolTipWidget extends StatefulWidget {
   final VoidCallback onTooltipTap;
   final EdgeInsets contentPadding;
   //final Border border;
+  final BorderRadius showcaseShape;
   final Widget button;
 
   ToolTipWidget(
@@ -69,6 +70,7 @@ class ToolTipWidget extends StatefulWidget {
       this.onTooltipTap,
       this.contentPadding,
       //this.border,
+      this.showcaseShape,
       this.button
   });
 
@@ -98,7 +100,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
     double descriptionLength = widget.description.length * 7.0;
     var maxTextWidth = max(titleLength, descriptionLength);
     if (maxTextWidth > widget.screenSize.width - 20) {
-      return widget.screenSize.width - 20;
+      return widget.screenSize.width;
     } else {
       return maxTextWidth + 15;
     }
@@ -204,7 +206,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                     padding:
                         EdgeInsets.only(top: paddingTop, bottom: paddingBottom),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: widget.showcaseShape ?? BorderRadius.circular(0),
                       child: GestureDetector(
                         onTap: widget.button != null ?
                           null : widget.onTooltipTap,
@@ -213,7 +215,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                           padding: widget.contentPadding,
                           decoration: BoxDecoration(
                               //border: widget.border ?? Border.all(width: 0),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: widget.showcaseShape ?? BorderRadius.circular(0),
                               color: widget.tooltipColor,
                           ),
                           child: Column(
@@ -248,8 +250,14 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                                                   color: widget.textColor)),
                                     ),
                                     widget.button == null ?
-                                        SizedBox.shrink():
-                                        widget.button
+                                    SizedBox.shrink() :
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: widget.button,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               )
