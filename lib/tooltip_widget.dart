@@ -221,46 +221,42 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  crossAxisAlignment: widget.title != null
-                                      ? CrossAxisAlignment.start
-                                      : CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    widget.title != null
-                                        ? Text(
-                                            widget.title,
-                                            style: widget.titleTextStyle ??
-                                                Theme.of(context)
-                                                    .textTheme
-                                                    .headline6
-                                                    .merge(TextStyle(
-                                                        color:
-                                                            widget.textColor)),
-                                          )
-                                        : SizedBox.shrink(),
-                                    Padding(
-                                      padding: EdgeInsets.only(right:
-                                        widget.button != null ? 32: 0),
-                                      child: Text(
-                                        widget.description,
-                                        style: widget.descTextStyle ??
-                                            Theme.of(context)
-                                                .textTheme
-                                                .subtitle2
-                                                .merge(TextStyle(
-                                                color: widget.textColor)),
-                                      ),
+                              Column(
+                                crossAxisAlignment: widget.title != null
+                                    ? CrossAxisAlignment.start
+                                    : CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  widget.title != null
+                                      ? Text(
+                                    widget.title,
+                                    style: widget.titleTextStyle ??
+                                        Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .merge(TextStyle(
+                                            color:
+                                            widget.textColor)),
+                                  )
+                                      : SizedBox.shrink(),
+                                  Padding(
+                                    padding: EdgeInsets.only(right:0),
+                                    child: Text(
+                                      widget.description,
+                                      style: widget.descTextStyle ??
+                                          Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              .merge(TextStyle(
+                                              color: widget.textColor)),
                                     ),
-                                    widget.button == null ?
-                                    SizedBox.shrink() :
-                                    Align(
+                                  ),
+                                  widget.button == null ?
+                                  SizedBox.shrink() :
+                                  Align(
                                       alignment: Alignment.bottomRight,
                                       child: widget.button
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               )
                             ],
                           ),
