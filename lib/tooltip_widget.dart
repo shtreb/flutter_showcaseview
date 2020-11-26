@@ -257,10 +257,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                                     SizedBox.shrink() :
                                     Align(
                                       alignment: Alignment.bottomRight,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 8),
-                                        child: widget.button,
-                                      ),
+                                      child: widget.button
                                     ),
                                   ],
                                 ),
