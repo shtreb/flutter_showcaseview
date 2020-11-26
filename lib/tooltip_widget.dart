@@ -96,8 +96,8 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
   }
 
   double _getTooltipWidth() {
-    double titleLength = widget.title == null ? 0 : widget.title.length * 10.0;
-    double descriptionLength = widget.description.length * 7.0;
+    double titleLength = widget.title == null ? 0 : widget.title.length * 14.0;
+    double descriptionLength = widget.description.length * (widget.button != null ? 12.0 : 10.0);
     var maxTextWidth = max(titleLength, descriptionLength);
     if (maxTextWidth > widget.screenSize.width - 20) {
       return widget.screenSize.width;
@@ -240,14 +240,18 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                                                             widget.textColor)),
                                           )
                                         : SizedBox.shrink(),
-                                    Text(
-                                      widget.description,
-                                      style: widget.descTextStyle ??
-                                          Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              .merge(TextStyle(
-                                                  color: widget.textColor)),
+                                    Padding(
+                                      padding: EdgeInsets.only(right:
+                                        widget.button != null ? 32: 0),
+                                      child: Text(
+                                        widget.description,
+                                        style: widget.descTextStyle ??
+                                            Theme.of(context)
+                                                .textTheme
+                                                .subtitle2
+                                                .merge(TextStyle(
+                                                color: widget.textColor)),
+                                      ),
                                     ),
                                     widget.button == null ?
                                     SizedBox.shrink() :
