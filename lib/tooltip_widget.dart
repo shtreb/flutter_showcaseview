@@ -193,14 +193,14 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
             top: contentY,
             left: _getLeft(),
             right: _getRight(),
-            child: FractionalTranslation(
+            child: /*FractionalTranslation(
               translation: Offset(0.0, contentFractionalOffset),
               child: SlideTransition(
                 position: Tween<Offset>(
                   begin: Offset(0.0, contentFractionalOffset / 10),
                   end: Offset(0.0, 0.100),
                 ).animate(widget.animationOffset),
-                child: Material(
+                child:*/ Material(
                   color: Colors.transparent,
                   child: Container(
                     padding:
@@ -264,8 +264,8 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                       ),
                     ),
                   ),
-                ),
-              ),
+                //),
+              //),
             ),
           ),
           //widget.showArrow ? _getArrow(contentOffsetMultiplier) : Container(),
@@ -319,7 +319,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
   }
 
   Widget _getArrow(contentOffsetMultiplier) {
-    final contentFractionalOffset = contentOffsetMultiplier.clamp(-1.0, 0.0);
+    //final contentFractionalOffset = contentOffsetMultiplier.clamp(-1.0, 0.0);
     /*var offset = widget.border?.top?.width ??
         widget.border?.bottom?.width ??
         widget.border?.right?.width ??
@@ -373,22 +373,22 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
           ),
         ],
       )*/
-      FractionalTranslation(
+      /*FractionalTranslation(
         translation: Offset(0.0, contentFractionalOffset),
         child: SlideTransition(
           position: Tween<Offset>(
             begin: Offset(0.0, contentFractionalOffset / 5),
             end: Offset(0.0, widget.button == null ? 0.160 : 0.270),
           ).animate(widget.animationOffset),
-          child: Icon(
+          child:*/ Icon(
             ToolTipWidget.isArrowUp
                 ? Icons.arrow_drop_up
                 : Icons.arrow_drop_down,
             color: widget.tooltipColor,
             size: 50,
           ),
-        ),
-      ),
+        //),
+      //),
     );
   }
 }
