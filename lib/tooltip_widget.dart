@@ -178,11 +178,11 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
     final contentFractionalOffset = contentOffsetMultiplier.clamp(-1.0, 0.0);
 
     double paddingTop = ToolTipWidget.isArrowUp ? 22 : 0;
-    double paddingBottom = ToolTipWidget.isArrowUp ? 0 : 27;
+    double paddingBottom = ToolTipWidget.isArrowUp ? 0 : 22;
 
     if (!widget.showArrow) {
-      paddingTop = 10;
-      paddingBottom = 20;
+      paddingTop = 0;
+      paddingBottom = 0;
     }
 
     if (widget.container == null) {
@@ -197,8 +197,8 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
               translation: Offset(0.0, contentFractionalOffset),
               child: SlideTransition(
                 position: Tween<Offset>(
-                  begin: Offset(0.0, contentFractionalOffset / 10),
-                  end: Offset(0.0, 0.100),
+                  begin: Offset(0.0, contentFractionalOffset / 14),
+                  end: Offset(0.0, 0.05),
                 ).animate(widget.animationOffset),
                 child: Material(
                   color: Colors.transparent,
