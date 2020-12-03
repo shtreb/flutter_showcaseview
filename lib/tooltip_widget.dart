@@ -182,7 +182,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
 
     if (!widget.showArrow) {
       paddingTop = 10;
-      paddingBottom = 10;
+      paddingBottom = 20;
     }
 
     if (widget.container == null) {
