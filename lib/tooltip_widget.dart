@@ -29,6 +29,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/get_position.dart';
 import 'package:showcaseview/measure_size.dart';
+import 'package:showcaseview/showcase-button.dart';
 
 class ToolTipWidget extends StatefulWidget {
   final GetPosition position;
@@ -50,7 +51,7 @@ class ToolTipWidget extends StatefulWidget {
   final EdgeInsets contentPadding;
   //final Border border;
   final BorderRadius showcaseShape;
-  final Widget button;
+  final List<ShowCaseButton> buttons;
 
   ToolTipWidget(
       {this.position,
@@ -71,8 +72,8 @@ class ToolTipWidget extends StatefulWidget {
       this.contentPadding,
       //this.border,
       this.showcaseShape,
-      this.button
-  });
+      List<ShowCaseButton> buttons
+  }) : buttons = buttons ?? '';
 
   @override
   _ToolTipWidgetState createState() => _ToolTipWidgetState();
@@ -97,7 +98,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
 
   double _getTooltipWidth() {
     double titleLength = widget.title == null ? 0 : widget.title.length * 14.0;
-    double descriptionLength = widget.description.length * (widget.button != null ? 12.0 : 10.0);
+    double descriptionLength = widget.description.length * (widget.buttons.isNotEmpty ? 12.0 : 10.0);
     var maxTextWidth = max(titleLength, descriptionLength);
     if (maxTextWidth > widget.screenSize.width - 20) {
       return widget.screenSize.width;
@@ -208,7 +209,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                     child: ClipRRect(
                       borderRadius: widget.showcaseShape ?? BorderRadius.circular(0),
                       child: GestureDetector(
-                        onTap: widget.button != null ?
+                        onTap: widget.buttons.isEmpty != null ?
                           null : widget.onTooltipTap,
                         child: Container(
                           width: _getTooltipWidth(),
@@ -250,11 +251,15 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                                               color: widget.textColor)),
                                     ),
                                   ),
-                                  widget.button == null ?
+                                  widget.buttons.isEmpty ?
                                   SizedBox.shrink() :
                                   Align(
                                       alignment: Alignment.bottomRight,
-                                      child: widget.button
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: widget.buttons,
+                                      )
                                   ),
                                 ],
                               )
@@ -289,7 +294,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                 child: Material(
                   color: Colors.transparent,
                   child: GestureDetector(
-                    onTap: widget.button != null ? null : widget.onTooltipTap,
+                    onTap: widget.buttons.isEmpty ? null : widget.onTooltipTap,
                     child: Container(
                       padding: EdgeInsets.only(
                         top: paddingTop,
@@ -378,7 +383,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
         child: SlideTransition(
           position: Tween<Offset>(
             begin: Offset(0.0, contentFractionalOffset / 5),
-            end: Offset(0.0, widget.button == null ? 0.160 : 0.270),
+            end: Offset(0.0, widget.buttons.isEmpty ? 0.160 : 0.270),
           ).animate(widget.animationOffset),
           child: Icon(
             ToolTipWidget.isArrowUp

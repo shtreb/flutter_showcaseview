@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:example/detailscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcase-button.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 void main() => runApp(MyApp());
@@ -70,10 +71,20 @@ class _MailPageState extends State<MailPage> {
               disposeOnTap: true,
               isOutlineButton: false,
               closeOnTapNoTarget: false,
-              hasButton: true,
-              colorButton: Colors.yellow,
+              buttons: [
+                ShowCaseButton(
+                  title: Text('Skip', style: TextStyle(fontSize: 22)),
+                  color: Colors.transparent,
+                  onPressed: () {
+
+                  },
+                ),
+                ShowCaseButton(
+                  title: Text('OK', style: TextStyle(fontSize: 22)),
+                  color: Colors.transparent,
+                )
+              ],
               showcaseBackgroundColor: Color(0xFFFABC29),
-              textButton: Text('OK', style: TextStyle(fontSize: 22),),
               onToolTipClick: () {
 
               },

@@ -32,11 +32,9 @@ class Showcase extends StatefulWidget {
   final bool disableAnimation;
   final bool closeOnTapNoTarget;
   //final Border border;
-  final bool hasButton;
   final bool isOutlineButton;
-  final Widget textButton;
-  final Color colorButton;
   final BorderRadius showcaseShape;
+  final List<ShowCaseButton> buttons;
 
   const Showcase({
     @required this.key,
@@ -60,10 +58,8 @@ class Showcase extends StatefulWidget {
     this.closeOnTapNoTarget = true,
     //this.border,
     this.showcaseShape,
-    this.hasButton = false,
+    this.buttons,
     this.isOutlineButton = true,
-    this.textButton,
-    this.colorButton = Colors.blue
   })  : height = null,
         width = null,
         container = null,
@@ -114,10 +110,8 @@ class Showcase extends StatefulWidget {
       this.disableAnimation = false,
       this.closeOnTapNoTarget = true,
       //this.border,
-      this.hasButton = false,
+      this.buttons,
       this.isOutlineButton = true,
-      this.textButton,
-      this.colorButton = Colors.blue,
       this.showcaseShape,
       this.contentPadding = const EdgeInsets.symmetric(vertical: 8)})
       : this.showArrow = false,
@@ -244,7 +238,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
   }
 
   void _getOnTooltipTap() {
-    if (widget.closeOnTapNoTarget && !widget.hasButton) return;
+    if (widget.closeOnTapNoTarget && (widget.buttons ?? []).isEmpty) return;
     if (widget.disposeOnTap == true) {
       ShowCaseWidget.of(context).dismiss();
     }
@@ -258,13 +252,26 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
     Size screenSize,
   ) {
 
-    Widget button = widget.hasButton ?
+    List<ShowCaseButton> btns = [];
+    for (var button in (widget.buttons ?? [])) {
+      if (button.onPressed == null) {
+        btns.add(ShowCaseButton(
+          title: button.title,
+          color: button.color,
+          isOutline: button.isOutline,
+          onPressed: _getOnTargetTap,
+        ));
+      } else btns.add(button);
+
+    }
+
+    /*Widget button = widget.hasButton ?
         ShowCaseButton(
             title: widget.textButton,
             color: widget.colorButton,
             isOutline: widget.isOutlineButton,
             onPressed: _getOnTargetTap,
-        ) : null;
+        ) : null;*/
 
     return Visibility(
       visible: _showShowCase,
@@ -311,7 +318,7 @@ class _ShowcaseState extends State<Showcase> with TickerProviderStateMixin {
             contentPadding: widget.contentPadding,
             //border: widget.border,
             showcaseShape: widget.showcaseShape,
-            button: button,
+            buttons: btns ?? [],
           ),
         ],
       ),
