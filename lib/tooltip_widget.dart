@@ -97,14 +97,15 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
   }
 
   double _getTooltipWidth() {
-    double titleLength = widget.title == null ? 0 : widget.title.length * 14.0;
+    /*double titleLength = widget.title == null ? 0 : widget.title.length * 14.0;
     double descriptionLength = widget.description.length * (widget.buttons.isNotEmpty ? 12.0 : 10.0);
     var maxTextWidth = max(titleLength, descriptionLength);
     if (maxTextWidth > widget.screenSize.width - 20) {
       return widget.screenSize.width;
     } else {
       return maxTextWidth + 15;
-    }
+    }*/
+    return MediaQuery.of(context).size.width;
   }
 
   bool _isLeft() {
@@ -220,49 +221,42 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                               color: widget.tooltipColor,
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Column(
-                                crossAxisAlignment: widget.title != null
-                                    ? CrossAxisAlignment.start
-                                    : CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  widget.title != null
-                                      ? Text(
-                                    widget.title,
-                                    style: widget.titleTextStyle ??
-                                        Theme.of(context)
-                                            .textTheme
-                                            .headline6
-                                            .merge(TextStyle(
-                                            color:
-                                            widget.textColor)),
-                                  )
-                                      : SizedBox.shrink(),
-                                  Padding(
-                                    padding: EdgeInsets.only(right:0),
-                                    child: Text(
-                                      widget.description,
-                                      style: widget.descTextStyle ??
-                                          Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              .merge(TextStyle(
-                                              color: widget.textColor)),
-                                    ),
-                                  ),
-                                  widget.buttons.isEmpty ?
-                                  SizedBox.shrink() :
-                                  Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: widget.buttons,
-                                      )
-                                  ),
-                                ],
+                              widget.title != null
+                                  ? Text(
+                                widget.title,
+                                style: widget.titleTextStyle ??
+                                    Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        .merge(TextStyle(
+                                        color:
+                                        widget.textColor)),
                               )
+                                  : SizedBox.shrink(),
+                              Padding(
+                                padding: EdgeInsets.only(right:0),
+                                child: Text(
+                                  widget.description,
+                                  style: widget.descTextStyle ??
+                                      Theme.of(context)
+                                          .textTheme
+                                          .subtitle2
+                                          .merge(TextStyle(
+                                          color: widget.textColor)),
+                                ),
+                              ),
+                              widget.buttons.isEmpty ?
+                              SizedBox.shrink() :
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: widget.buttons,
+                                  )
+                              ),
                             ],
                           ),
                         ),
