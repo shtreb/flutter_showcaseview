@@ -59,9 +59,10 @@ class _MailPageState extends State<MailPage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height*.8,
+              height: MediaQuery.of(context).size.height*.1,
             ),
             Showcase(
               key: _three,
@@ -98,61 +99,9 @@ class _MailPageState extends State<MailPage> {
 
                 });
               },
-              child: Container(
-                padding: const EdgeInsets.only(left: 6, right: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Slack',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
-                                ),
-                              ),
-                              Text(
-                                'Flutter Notification',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                'Hi, you have new Notification',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          '1 Jun',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Icon(
-                          Icons.star_border,
-                          color: Colors.grey,
-                        )
-                      ],
-                    )
-                  ],
-                ),
+              child: IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {},
               ),
             )
           ],

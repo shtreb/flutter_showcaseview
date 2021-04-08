@@ -141,7 +141,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
       double rightPadding =
           widget.position.getCenter() + (_getTooltipWidth() / 2);
       if (rightPadding + _getTooltipWidth() > widget.screenSize.width) {
-        rightPadding = 14;
+        rightPadding = 0;
       }
       return rightPadding;
     } else if (!(_isLeft())) {
