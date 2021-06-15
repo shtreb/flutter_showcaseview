@@ -61,7 +61,7 @@ class Showcase extends StatefulWidget {
     this.showcaseShape,
     this.buttons,
     this.isOutlineButton = true,
-    required this.container,
+    this.container,
   })  :
         assert(overlayOpacity >= 0.0 && overlayOpacity <= 1.0,
             "overlay opacity should be >= 0.0 and <= 1.0."),
