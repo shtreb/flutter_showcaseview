@@ -19,7 +19,7 @@ class Showcase extends StatefulWidget {
   final GlobalKey key;
   final Color overlayColor;
   final double overlayOpacity;
-  final Widget container;
+  final Widget? container;
   final Color showcaseBackgroundColor;
   final Color textColor;
   final bool showArrow;
