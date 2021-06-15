@@ -7,10 +7,10 @@ class MeasureSize extends StatefulWidget {
   final Widget child;
   final OnWidgetSizeChange onSizeChange;
 
-  MeasureSize({
-    @required this.onSizeChange,
-    @required this.child,
-  });
+  MeasureSize(
+      this.child,
+      this.onSizeChange,
+  );
 
   @override
   _MeasureSizeState createState() => _MeasureSizeState();
@@ -19,7 +19,7 @@ class MeasureSize extends StatefulWidget {
 class _MeasureSizeState extends State<MeasureSize> {
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
+    SchedulerBinding.instance!.addPostFrameCallback(postFrameCallback);
     return Container(
       key: widgetKey,
       child: widget.child,
@@ -33,7 +33,7 @@ class _MeasureSizeState extends State<MeasureSize> {
     var context = widgetKey.currentContext;
     if (context == null) return;
 
-    var newSize = context.size;
+    var newSize = context.size!;
     if (oldSize == newSize) return;
 
     oldSize = newSize;

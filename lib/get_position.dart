@@ -29,14 +29,22 @@ import 'package:flutter/material.dart';
 class GetPosition {
   final GlobalKey key;
 
-  GetPosition({this.key});
+  GetPosition(this.key);
 
   Rect getRect() {
-    RenderBox box = key.currentContext.findRenderObject();
+    RenderBox? box = key.currentContext?.findRenderObject() as RenderBox?;
 
-    final topLeft = box.size.topLeft(box.localToGlobal(const Offset(0.0, 0.0)));
-    final bottomRight =
-        box.size.bottomRight(box.localToGlobal(const Offset(0.0, 0.0)));
+    final topLeft = box?.size.topLeft(
+        box.localToGlobal(
+            const Offset(0.0, 0.0)
+        )
+    ) ?? Offset(0,0);
+
+    final bottomRight = box?.size.bottomRight(
+        box.localToGlobal(
+            const Offset(0.0, 0.0)
+        )
+    ) ?? Offset(0,0);
 
     Rect rect = Rect.fromLTRB(
       topLeft.dx,
@@ -49,32 +57,46 @@ class GetPosition {
 
   ///Get the bottom position of the widget
   double getBottom() {
-    RenderBox box = key.currentContext.findRenderObject();
-    final bottomRight =
-        box.size.bottomRight(box.localToGlobal(const Offset(0.0, 0.0)));
-    return bottomRight.dy;
+    RenderBox? box = key.currentContext?.findRenderObject() as RenderBox?;
+    final bottomRight = box?.size.bottomRight(
+        box.localToGlobal(
+            const Offset(0.0, 0.0)
+        )
+    );
+    return bottomRight?.dy ?? .0;
   }
 
   ///Get the top position of the widget
   double getTop() {
-    RenderBox box = key.currentContext.findRenderObject();
-    final topLeft = box.size.topLeft(box.localToGlobal(const Offset(0.0, 0.0)));
-    return topLeft.dy;
+    RenderBox? box = key.currentContext?.findRenderObject() as RenderBox?;
+    final topLeft = box?.size.topLeft(
+        box.localToGlobal(
+            const Offset(0.0, 0.0)
+        )
+    );
+    return topLeft?.dy ?? .0;
   }
 
   ///Get the left position of the widget
   double getLeft() {
-    RenderBox box = key.currentContext.findRenderObject();
-    final topLeft = box.size.topLeft(box.localToGlobal(const Offset(0.0, 0.0)));
-    return topLeft.dx;
+    RenderBox? box = key.currentContext?.findRenderObject() as RenderBox?;
+    final topLeft = box?.size.topLeft(
+        box.localToGlobal(
+            const Offset(0.0, 0.0)
+        )
+    );
+    return topLeft?.dx ?? .0;
   }
 
   ///Get the right position of the widget
   double getRight() {
-    RenderBox box = key.currentContext.findRenderObject();
-    final bottomRight =
-        box.size.bottomRight(box.localToGlobal(const Offset(0.0, 0.0)));
-    return bottomRight.dx;
+    RenderBox? box = key.currentContext?.findRenderObject() as RenderBox?;
+    final bottomRight = box?.size.bottomRight(
+        box.localToGlobal(
+            const Offset(0.0, 0.0)
+        )
+    );
+    return bottomRight?.dx ?? 0;
   }
 
   double getHeight() {

@@ -47,27 +47,29 @@ class AnchoredOverlay extends StatelessWidget {
       overlayBuilder;
   final Widget child;
 
-  AnchoredOverlay({
-    key,
-    this.showOverlay = false,
-    this.overlayBuilder,
-    this.child,
-  }) : super(key: key);
+  AnchoredOverlay(
+      {
+        key,
+        this.showOverlay = false,
+        required this.child,
+        required this.overlayBuilder,
+      }
+  ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return OverlayBuilder(
-          showOverlay: showOverlay,
-          overlayBuilder: (BuildContext overlayContext) {
+          child,
+          (BuildContext overlayContext) {
             // To calculate the "anchor" point we grab the render box of
             // our parent Container and then we find the center of that box.
             RenderBox box = context.findRenderObject() as RenderBox;
             final topLeft =
-                box.size.topLeft(box.localToGlobal(const Offset(0.0, 0.0)));
+            box.size.topLeft(box.localToGlobal(const Offset(0.0, 0.0)));
             final bottomRight =
-                box.size.bottomRight(box.localToGlobal(const Offset(0.0, 0.0)));
+            box.size.bottomRight(box.localToGlobal(const Offset(0.0, 0.0)));
             final Rect anchorBounds = Rect.fromLTRB(
               topLeft.dx,
               topLeft.dy,
@@ -77,7 +79,7 @@ class AnchoredOverlay extends StatelessWidget {
             final anchorCenter = box.size.center(topLeft);
             return overlayBuilder(overlayContext, anchorBounds, anchorCenter);
           },
-          child: child,
+          showOverlay: showOverlay,
         );
       },
     );
@@ -102,39 +104,41 @@ class OverlayBuilder extends StatefulWidget {
   final Widget Function(BuildContext) overlayBuilder;
   final Widget child;
 
-  OverlayBuilder({
-    key,
-    this.showOverlay = false,
-    this.overlayBuilder,
-    this.child,
-  }) : super(key: key);
+  OverlayBuilder(
+      this.child,
+      this.overlayBuilder,
+      {
+        key,
+        this.showOverlay = false,
+      }
+  ) : super(key: key);
 
   @override
   _OverlayBuilderState createState() => _OverlayBuilderState();
 }
 
 class _OverlayBuilderState extends State<OverlayBuilder> {
-  OverlayEntry _overlayEntry;
+  OverlayEntry? _overlayEntry;
 
   @override
   void initState() {
     super.initState();
 
     if (widget.showOverlay) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => showOverlay());
+      WidgetsBinding.instance!.addPostFrameCallback((_) => showOverlay());
     }
   }
 
   @override
   void didUpdateWidget(OverlayBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-    WidgetsBinding.instance.addPostFrameCallback((_) => syncWidgetAndOverlay());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => syncWidgetAndOverlay());
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    WidgetsBinding.instance.addPostFrameCallback((_) => syncWidgetAndOverlay());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => syncWidgetAndOverlay());
   }
 
   @override
@@ -161,17 +165,17 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
     }
   }
 
-  void addToOverlay(OverlayEntry overlayEntry) async {
-    Overlay.of(context).insert(overlayEntry);
+  void addToOverlay(OverlayEntry? overlayEntry) async {
+    if (overlayEntry == null) return;
+    Overlay.of(context)!.insert(overlayEntry);
     final overlay = Overlay.of(context);
-    if (overlayEntry == null)
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => overlay.insert(overlayEntry));
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        overlay!.insert(overlayEntry));
   }
 
   void hideOverlay() {
     if (_overlayEntry != null) {
-      _overlayEntry.remove();
+      _overlayEntry!.remove();
       _overlayEntry = null;
     }
   }
@@ -185,8 +189,8 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
   }
 
   void buildOverlay() async {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _overlayEntry?.markNeedsBuild());
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        _overlayEntry?.markNeedsBuild());
   }
 
   @override

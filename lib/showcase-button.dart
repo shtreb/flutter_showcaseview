@@ -5,11 +5,11 @@ class ShowCaseButton extends StatelessWidget {
 
   final Widget title;
   final bool isOutline;
-  final Color color;
-  final VoidCallback onPressed;
+  final Color? color;
+  final VoidCallback? onPressed;
 
   ShowCaseButton({
-    @required this.title,
+    required this.title,
     this.isOutline = true,
     this.color,
     this.onPressed
@@ -17,8 +17,7 @@ class ShowCaseButton extends StatelessWidget {
 
   @override Widget build(BuildContext context) {
     Color color = this.color ??
-        Theme.of(context).buttonColor ??
-        Colors.blue;
+        Theme.of(context).buttonColor;
 
     var widget;
 
