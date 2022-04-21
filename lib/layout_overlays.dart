@@ -44,7 +44,7 @@ import 'package:flutter/material.dart';
 class AnchoredOverlay extends StatelessWidget {
   final bool showOverlay;
   final Widget Function(BuildContext, Rect anchorBounds, Offset anchor)
-      overlayBuilder;
+  overlayBuilder;
   final Widget child;
 
   AnchoredOverlay(
@@ -54,7 +54,7 @@ class AnchoredOverlay extends StatelessWidget {
         required this.child,
         required this.overlayBuilder,
       }
-  ) : super(key: key);
+      ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,22 +62,33 @@ class AnchoredOverlay extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         return OverlayBuilder(
           child,
-          (BuildContext overlayContext) {
+              (BuildContext overlayContext) {
             // To calculate the "anchor" point we grab the render box of
             // our parent Container and then we find the center of that box.
-            RenderBox box = context.findRenderObject() as RenderBox;
-            final topLeft =
-            box.size.topLeft(box.localToGlobal(const Offset(0.0, 0.0)));
-            final bottomRight =
-            box.size.bottomRight(box.localToGlobal(const Offset(0.0, 0.0)));
-            final Rect anchorBounds = Rect.fromLTRB(
-              topLeft.dx,
-              topLeft.dy,
-              bottomRight.dx,
-              bottomRight.dy,
+            RenderBox? box = context.findRenderObject() as RenderBox?;
+            final topLeft = box?.size.topLeft(
+              box.localToGlobal(
+                const Offset(0.0, 0.0),
+              ),
             );
-            final anchorCenter = box.size.center(topLeft);
-            return overlayBuilder(overlayContext, anchorBounds, anchorCenter);
+            final bottomRight = box?.size.bottomRight(
+              box.localToGlobal(
+                const Offset(0.0, 0.0),
+              ),
+            );
+            final Rect anchorBounds = Rect.fromLTRB(
+              topLeft?.dx ?? 0,
+              topLeft?.dy ?? 0,
+              bottomRight?.dx ?? 0,
+              bottomRight?.dy ?? 0,
+            );
+            final offset = const Offset(0,0);
+            final anchorCenter = box?.size.center(topLeft ?? offset);
+            return overlayBuilder(
+              overlayContext,
+              anchorBounds,
+              anchorCenter ?? offset,
+            );
           },
           showOverlay: showOverlay,
         );
@@ -111,7 +122,7 @@ class OverlayBuilder extends StatefulWidget {
         key,
         this.showOverlay = false,
       }
-  ) : super(key: key);
+      ) : super(key: key);
 
   @override
   _OverlayBuilderState createState() => _OverlayBuilderState();
@@ -168,7 +179,7 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
   void addToOverlay(OverlayEntry? overlayEntry) async {
     if (overlayEntry == null) return;
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-        Overlay.of(context)?.insert(overlayEntry);
+      Overlay.of(context)?.insert(overlayEntry);
     });
   }
 
