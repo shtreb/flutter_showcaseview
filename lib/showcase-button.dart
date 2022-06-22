@@ -25,14 +25,14 @@ class ShowCaseButton extends StatelessWidget {
       widget = OutlinedButton(
           child: title,
           style: theme.outlinedButtonTheme.style?.copyWith(
-            shape: MaterialStatePropertyAll(
+            shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(
                   Radius.circular(6),
                 ),
               ),
             ),
-            side: MaterialStatePropertyAll(BorderSide(color: color, width: 1)),
+            side: MaterialStateProperty.all(BorderSide(color: color, width: 1)),
           ),
           //highlightedBorderColor: color.withOpacity(.75),
           onPressed: onPressed,
