@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShowCaseButton extends StatelessWidget {
@@ -16,26 +15,30 @@ class ShowCaseButton extends StatelessWidget {
   });
 
   @override Widget build(BuildContext context) {
-    Color color = this.color ??
-        Theme.of(context).buttonColor;
+    final theme = Theme.of(context);
+    Color color = this.color ?? theme.colorScheme.primary;
 
     var widget;
 
     if (isOutline) {
-      widget = OutlineButton(
+
+      widget = OutlinedButton(
           child: title,
-          color: color,
-          borderSide: BorderSide(color: color, width: 1),
-          highlightedBorderColor: color.withOpacity(.75),
-          onPressed: onPressed,
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(6),
+          style: theme.outlinedButtonTheme.style?.copyWith(
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(6),
+                ),
+              ),
             ),
-          )
+            side: MaterialStatePropertyAll(BorderSide(color: color, width: 1)),
+          ),
+          //highlightedBorderColor: color.withOpacity(.75),
+          onPressed: onPressed,
       );
     } else {
-      widget = CupertinoButton(
+      widget = TextButton(
           child: title,
           onPressed: onPressed
       );
