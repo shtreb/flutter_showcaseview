@@ -78,16 +78,28 @@ class ToolTipWidget extends StatefulWidget {
 }
 
 class _ToolTipWidgetState extends State<ToolTipWidget> {
+  final GlobalKey _key = GlobalKey();
+
   Offset position = Offset(0,0);
 
-  bool isCloseToTopOrBottom(Offset position) {
-    double height = 120;
+  bool isCloseToTopOrBottom(Offset position, GlobalKey key) {
+    double height;
+    try {
+      final keyContext = key.currentContext;
+      final box = keyContext?.findRenderObject() as RenderBox?;
+      height = box?.size.height ?? 0;
+      height += height*.1;
+      if (height == 0) throw Exception();
+    } catch(e) {
+      height = MediaQuery.of(context).size.height/2;
+    }
     height = widget.contentHeight ?? height;
-    return ((widget.screenSize?.height ?? 0) - position.dy) <= height;
+    final sHeight = MediaQuery.of(context).size.height;
+    return (sHeight - position.dy) <= height;
   }
 
-  String findPositionForContent(Offset position) {
-    if (isCloseToTopOrBottom(position)) {
+  String findPositionForContent(Offset position, GlobalKey key) {
+    if (isCloseToTopOrBottom(position, key)) {
       return 'ABOVE';
     } else {
       return 'BELOW';
@@ -167,7 +179,10 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final contentOrientation = findPositionForContent(position);
+    position = widget.offset ?? Offset(0, 0);
+    final _position = widget.position;
+    final offset = Offset(0, _position?.getBottom() ?? 0);
+    final contentOrientation = findPositionForContent(offset, _key);
     final contentOffsetMultiplier = contentOrientation == "BELOW" ? 1.0 : -1.0;
     ToolTipWidget.isArrowUp = contentOffsetMultiplier == 1.0;
 
@@ -210,6 +225,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                       child: GestureDetector(
                         onTap: widget.onTooltipTap,
                         child: Container(
+                          key: _key,
                           width: _getTooltipWidth(),
                           padding: widget.contentPadding,
                           decoration: BoxDecoration(
@@ -287,6 +303,7 @@ class _ToolTipWidgetState extends State<ToolTipWidget> {
                   child: GestureDetector(
                     onTap: widget.buttons.isEmpty ? null : widget.onTooltipTap,
                     child: Container(
+                      key: _key,
                       padding: EdgeInsets.only(
                         top: paddingTop,
                       ),

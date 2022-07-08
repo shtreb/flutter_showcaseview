@@ -58,54 +58,58 @@ class _MailPageState extends State<MailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height*.1,
-            ),
-            Showcase(
-              key: _three,
-              description: 'У вас есть личный кабинет что бы просматривать всю интересующую вас информацию',
-              descTextStyle: TextStyle(color: Colors.black87, fontSize: 22),
-              shapeBorder: CircleBorder(),
-              disposeOnTap: true,
-              isOutlineButton: false,
-              closeOnTapNoTarget: false,
-              buttons: [
-                ShowCaseButton(
-                  title: Text('Skip', style: TextStyle(fontSize: 22)),
-                  color: Colors.transparent,
-                  onPressed: () {
-
-                  },
-                ),
-                ShowCaseButton(
-                  title: Text('OK', style: TextStyle(fontSize: 22)),
-                  color: Colors.transparent,
-                )
-              ],
-              showcaseBackgroundColor: Color(0xFFFABC29),
-              onToolTipClick: () {
-
-              },
-              onTargetClick: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => Detail(),
-                  ),
-                ).then((_) {
-
-                });
-              },
-              child: IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {},
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          child: Stack(
+            //crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height*.1,
               ),
-            )
-          ],
-        ),
+              Showcase(
+                key: _three,
+                description: 'У вас есть личный кабинет что бы просматривать всю интересующую вас информацию',
+                descTextStyle: TextStyle(color: Colors.black87, fontSize: 22),
+                shapeBorder: CircleBorder(),
+                disposeOnTap: true,
+                isOutlineButton: false,
+                closeOnTapNoTarget: false,
+                buttons: [
+                  ShowCaseButton(
+                    title: Text('Skip', style: TextStyle(fontSize: 22)),
+                    color: Colors.transparent,
+                    onPressed: () {
+
+                    },
+                  ),
+                  ShowCaseButton(
+                    title: Text('OK', style: TextStyle(fontSize: 22)),
+                    color: Colors.transparent,
+                  )
+                ],
+                showcaseBackgroundColor: Color(0xFFFABC29),
+                onToolTipClick: () {
+
+                },
+                onTargetClick: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Detail(),
+                    ),
+                  ).then((_) {
+
+                  });
+                },
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
+        )
       ),
     );
   }
