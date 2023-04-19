@@ -184,7 +184,7 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
   }
 
   void hideOverlay() {
-    if (_overlayEntry != null) {
+    if (_overlayEntry != null && (_overlayEntry?.mounted ?? false)) {
       _overlayEntry!.remove();
       _overlayEntry = null;
     }
