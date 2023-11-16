@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShowCaseButton extends StatelessWidget {
@@ -15,21 +16,8 @@ class ShowCaseButton extends StatelessWidget {
   });
 
   @override Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    Color color = this.color ?? theme.colorScheme.primary;
-
-    return TextButton(
+    return CupertinoButton(
       child: title,
-      style: theme.outlinedButtonTheme.style?.copyWith(
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(6),
-            ),
-          ),
-        ),
-        side: MaterialStateProperty.all(BorderSide(color: color, width: 1)),
-      ),
       onPressed: onPressed,
     );
   }

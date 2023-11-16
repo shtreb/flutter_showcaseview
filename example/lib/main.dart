@@ -116,10 +116,10 @@ class _MailPageState extends State<MailPage> {
 }
 
 class Mail {
-  String sender;
-  String sub;
-  String msg;
-  String date;
+  String? sender;
+  String? sub;
+  String? msg;
+  String? date;
   bool isUnread;
 
   Mail({
@@ -127,7 +127,7 @@ class Mail {
     this.sub,
     this.msg,
     this.date,
-    this.isUnread,
+    this.isUnread = false,
   });
 }
 
@@ -156,7 +156,7 @@ class MailTile extends StatelessWidget {
                     color: Colors.blue[200],
                   ),
                   child: Center(
-                    child: Text(mail.sender[0]),
+                    child: Text(mail.sender?[0] ?? ''),
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(left: 8)),
@@ -164,7 +164,7 @@ class MailTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      mail.sender,
+                      mail.sender ?? '',
                       style: TextStyle(
                         fontWeight:
                             mail.isUnread ? FontWeight.bold : FontWeight.normal,
@@ -172,7 +172,7 @@ class MailTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      mail.sub,
+                      mail.sub ?? '',
                       style: TextStyle(
                         fontWeight:
                             mail.isUnread ? FontWeight.bold : FontWeight.normal,
@@ -180,7 +180,7 @@ class MailTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      mail.msg,
+                      mail.msg ?? '',
                       style: TextStyle(
                         fontWeight:
                             mail.isUnread ? FontWeight.bold : FontWeight.normal,
@@ -195,7 +195,7 @@ class MailTile extends StatelessWidget {
           Column(
             children: <Widget>[
               Text(
-                mail.date,
+                mail.date ?? '',
                 style: TextStyle(
                   fontWeight:
                       mail.isUnread ? FontWeight.bold : FontWeight.normal,
